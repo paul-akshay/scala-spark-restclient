@@ -1,0 +1,16 @@
+**/.idea/
+**/*.iml
+**/target/
+**/logs/
+**/work/
+**/.DS_Store
+**/.editorconfig
+**/.project
+**/.settings
+**/.classpath
+**/*.swp
+**/bin
+**/*.ipr
+**/*.iws
+**/scalastyle-output.xml
+
