@@ -1,0 +1,137 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.paulakshay</groupId>
+  <artifactId>scala-spark-restclient</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>scala-spark-restclient</name>
+  <url>http://maven.apache.org</url>
+
+  <repositories>
+    <repository>
+      <id>central</id>
+      <url>https://repo.maven.apache.org/maven2</url>
+    </repository>
+  </repositories>
+
+  <properties>
+    <scala.major.version>2</scala.major.version>
+    <scala.minor.version>11</scala.minor.version>
+    <scala.maintenance.version>8</scala.maintenance.version>
+    <scala.major.minor.version>${scala.major.version}.${scala.minor.version}</scala.major.minor.version>
+    <scala-library.version>${scala.major.minor.version}.${scala.maintenance.version}</scala-library.version>
+    <spark.version>2.4.3</spark.version>
+    <scalatest.version>3.0.8</scalatest.version>
+  </properties>
+
+  <dependencies>
+    <!-- Scala Library -->
+    <dependency>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scala-library</artifactId>
+      <version>${scala-library.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- Spark Core -->
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-core_2.11</artifactId>
+      <version>${spark.version}</version>
+    </dependency>
+
+    <!-- Spark SQL -->
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-sql_${scala.major.minor.version}</artifactId>
+      <version>${spark.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+      <version>2.11.2</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.asynchttpclient</groupId>
+      <artifactId>async-http-client</artifactId>
+      <version>2.1.0-alpha22</version>
+    </dependency>
+
+    <!-- JSON and REST Client -->
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20200518</version>
+    </dependency>
+
+    <!-- Test Dependencies -->
+    <dependency>
+      <groupId>org.scalatest</groupId>
+      <artifactId>scalatest_${scala.major.minor.version}</artifactId>
+      <version>${scalatest.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-scala_${scala.major.minor.version}</artifactId>
+      <version>1.17.0</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <!-- Scala Maven Plugin for compiling Scala code -->
+      <plugin>
+        <groupId>net.alchim31.maven</groupId>
+        <artifactId>scala-maven-plugin</artifactId>
+        <version>4.5.3</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>compile</goal>
+              <goal>testCompile</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- Scalastyle Maven Plugin -->
+      <plugin>
+        <groupId>org.scalastyle</groupId>
+        <artifactId>scalastyle-maven-plugin</artifactId>
+        <version>1.0.0</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
+            <configuration>
+              <sourceDirectory>src/main/scala</sourceDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- Surefire Plugin for running ScalaTest -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.0.0-M5</version> <!-- Latest stable version -->
+        <configuration>
+          <includes>
+            <include>**/*Spec.scala</include> <!-- Specify the pattern for test files -->
+          </includes>
+          <dependenciesToScan>
+            <dependency>org.scalatest:scalatest_2.11:3.0.8</dependency> <!-- ScalaTest dependency -->
+          </dependenciesToScan>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+
+</project>
