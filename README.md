@@ -1,14 +1,41 @@
 # Scala Spark REST Client
 
-This is a utility to provide convenient interaction with REST APIs in Spark using asynchronous HTTP requests. It allows you to make `GET` and `POST` requests in parallel across DataFrame partitions, while limiting the number of requests sent per second. The utility dynamically builds query parameters and headers based on DataFrame columns. Additionally, the responses (including JSON body and status codes) are appended to the original DataFrame.
+A scalable REST client for Spark that performs asynchronous GET and POST requests on DataFrame rows, appending responses.
+Supports rate limiting, dynamic headers, and error handling for efficient API interactions.
 
-## Features
+# Prerequisites
+Before you begin, ensure you have the following installed:
+- **Java 8** (`JDK 1.8`)
+- **Apache Maven** (`3.x`)
+- **Scala 2.11.8**
+- **Spark 2.4.3**
+
+# Installation
+
+1. Build the Project
+
+To build the project and generate the JAR file, run:
+
+```scala
+mvn clean package
+```
+
+The JAR file will be created inside the target/ directory.
+2. Install the Package (Optional)
+
+To install the package into your local Maven repository:
+
+```scala
+mvn clean install
+```
+
+# Features
 
 - **Rate Limiting**: Ensures a maximum no of requests send to the downstream API. You can configure tps in ConnectionProperties for the same
 - **Asynchronous Execution**: Uses `AsyncHttpClient` for non-blocking requests.
 - **Convenient**: Provide your input as dataframe where each row represents the varying set of values for headers, query parameters, or request body fields. The output json reponse will be appended against each row which you can transform as per your need
 
-## Example Usage
+# Example Usage
 
 ### ConnectionProperties Definition
 
@@ -77,7 +104,8 @@ val resultDfPost = restClient.doPost(inputDf, paramColumns, headerColumns, reque
 
 ```
 
-- 
-## Future Enhancements
+
+# Planned Future Enhancements
 - Ability to control no of requests sent from each executor. Currently it is limited to 1
 - Support for Datasets
+- Spark Version upgrade
